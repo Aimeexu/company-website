@@ -16,8 +16,8 @@
         </div>
         <div class="footer-col">
           <h4>扫码关注</h4>
-          <img src="/qr1.png" alt="微信二维码" />
-          <img src="/qr2.png" alt="小程序二维码" />
+          <img src="https://via.placeholder.com/80x80?text=微信二维码" alt="微信二维码" />
+          <img src="https://via.placeholder.com/80x80?text=小程序二维码" alt="小程序二维码" />
         </div>
       </div>
       <p class="copyright">
@@ -39,6 +39,7 @@ export default {
   padding: 40px 0 20px;
   font-size: 14px;
   color: #333;
+  box-shadow: inset 0 1px 0 #ddd;
 }
 .container {
   max-width: 1200px;
@@ -59,12 +60,17 @@ export default {
 .footer-col h4 {
   font-size: 16px;
   margin-bottom: 8px;
+  color: #00aaff;
 }
 .footer-col img {
   width: 80px;
   margin: 8px 8px 0 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 footer p {
   margin: 0;
+  text-align: center;
+  color: #666;
 }
 </style>

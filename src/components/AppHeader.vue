@@ -26,6 +26,7 @@ export default {
   background-color: #0d1731;
   color: white;
   padding: 16px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .container {
   max-width: 1200px;
@@ -36,8 +37,9 @@ export default {
   align-items: center;
 }
 .logo {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
+  color: #00aaff;
 }
 .nav {
   display: flex;
@@ -48,8 +50,10 @@ export default {
   color: white;
   text-decoration: none;
   padding-bottom: 4px;
+  font-weight: 500;
+  transition: border-bottom 0.3s ease;
 }
-.nav a.active {
+.nav a.active, .nav a:hover {
   border-bottom: 2px solid #00aaff;
 }
 .search-box {
@@ -58,13 +62,21 @@ export default {
   gap: 8px;
 }
 .search-box input {
-  padding: 4px 8px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
 }
 .search-box button {
-  padding: 4px 12px;
+  padding: 6px 16px;
   background-color: #00aaff;
   border: none;
   color: white;
   cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.search-box button:hover {
+  background-color: #0088cc;
 }
 </style>
