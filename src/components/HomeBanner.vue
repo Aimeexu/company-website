@@ -16,8 +16,8 @@ export default {
   data() {
     return {
       images: [
-        'https://picsum.photos/id/1018/1000/400',
-        'https://picsum.photos/id/1015/1000/400',
+        'https://p.ipic.vip/mhbcng.jpg',
+        'https://p.ipic.vip/mhbcng.jpg',
         'https://picsum.photos/id/1019/1000/400'
       ],
       currentIndex: 0,

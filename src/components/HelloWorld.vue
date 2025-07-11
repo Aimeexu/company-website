@@ -2,8 +2,8 @@
   <div>
     <AppHeader />
     <HomeBanner />
-    <CaseList />
     <TechList />
+    <CaseList />
     <AppFooter />
   </div>
 </template>
@@ -20,8 +20,8 @@ export default {
   components: {
     AppHeader,
     HomeBanner,
-    CaseList,
     TechList,
+    CaseList,
     AppFooter
   }
 }

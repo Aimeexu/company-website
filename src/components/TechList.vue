@@ -1,7 +1,7 @@
 <template>
   <section class="tech-section">
     <div class="container">
-      <h2 class="section-title">技术技术</h2>
+      <h2 class="section-title">产品展示</h2>
       <div class="tech-list">
         <div class="tech-item" v-for="(tech, index) in techs" :key="index">
           <img :src="tech.img" :alt="tech.title" />
@@ -18,9 +18,12 @@ export default {
   data() {
     return {
       techs: [
-        { img: 'https://picsum.photos/id/1025/240/160', title: '远乔匠' },
-        { img: 'https://picsum.photos/id/1026/240/160', title: '彻咸黯' },
-        { img: 'https://picsum.photos/id/1027/240/160', title: '演愈控制器' }
+        { img: 'https://www.controlway.cn/uploads/allimg/191202/1-191202101T4-53.jpg', title: '电感传感器' },
+        { img: 'https://www.controlway.cn/uploads/allimg/191202/1-191202101T4-53.jpg', title: '电感传感器' },
+        { img: 'https://www.controlway.cn/uploads/allimg/191202/1-191202101T4-53.jpg', title: '电感传感器' },
+        { img: 'https://www.controlway.cn/uploads/allimg/191202/1-191202101T4-53.jpg', title: '电感传感器' },
+        { img: 'https://www.controlway.cn/uploads/allimg/191202/1-191202101T4-53.jpg', title: '电感传感器' },
+    
       ]
     }
   }
@@ -52,6 +55,9 @@ export default {
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  background-color: rgb(245, 251, 251);
+  /* border: 1px solid rgb(160, 154, 154); */
+  border-radius: 10px;
 }
 .tech-item:hover {
   transform: translateY(-10px);
