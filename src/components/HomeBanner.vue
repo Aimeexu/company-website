@@ -18,7 +18,7 @@ export default {
       images: [
         'https://p.ipic.vip/mhbcng.jpg',
         'https://p.ipic.vip/mhbcng.jpg',
-        'https://picsum.photos/id/1019/1000/400'
+        'https://picsum.photos/id/1011/1000/400'
       ],
       currentIndex: 0,
       timer: null
@@ -81,13 +81,14 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(105, 92, 92, 0.3);
   border: none;
   color: white;
-  font-size: 2rem;
+  font-size: 4rem;
   padding: 0 12px;
   cursor: pointer;
   user-select: none;
+  z-index: 10; /* 增加层级 */
 }
 .prev {
   left: 10px;

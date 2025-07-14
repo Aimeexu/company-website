@@ -12,7 +12,7 @@
         </div>
         <div class="footer-col">
           <h4>技术文档</h4>
-          <p>按安博课<br />2 层展目厂</p>
+          <p>按安博课<br />层展目厂</p>
         </div>
         <div class="footer-col">
           <h4>扫码关注</h4>
@@ -36,41 +36,44 @@ export default {
 <style scoped>
 .app-footer {
   background-color: #f3f3f3;
-  padding: 40px 0 20px;
+  padding: 30px 0 10px;
   font-size: 14px;
-  color: #333;
+  color: #555;
   box-shadow: inset 0 1px 0 #ddd;
 }
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 24px;
 }
 .footer-columns {
   display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 24px;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 .footer-col {
-  flex: 1;
-  min-width: 200px;
+  flex: 1 1 200px;
+  margin-bottom: 20px;
 }
 .footer-col h4 {
-  font-size: 16px;
-  margin-bottom: 8px;
+  font-weight: bold;
   color: #00aaff;
+  margin-bottom: 12px;
+}
+.footer-col p {
+  line-height: 1.6;
+  color: #666;
 }
 .footer-col img {
   width: 80px;
-  margin: 8px 8px 0 0;
+  height: 80px;
+  margin-right: 12px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-footer p {
-  margin: 0;
+.copyright {
   text-align: center;
-  color: #666;
+  color: #999;
+  margin-top: 20px;
 }
 </style>

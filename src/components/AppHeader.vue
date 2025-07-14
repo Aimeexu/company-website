@@ -29,7 +29,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 16px;
   display: flex;
