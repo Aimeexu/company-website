@@ -3,9 +3,9 @@
     <div class="container">
       <div class="logo">工业风帆</div>
       <nav class="nav">
-        <a href="#" class="active">首页</a>
-        <a href="#">工业类产品</a>
-        <a href="#">案例展示</a>
+        <router-link to="/" class="nav-link" active-class="active" exact>首页</router-link>
+        <router-link to="/product-center" class="nav-link" active-class="active">工业类产品</router-link>
+        <router-link to="#" class="nav-link">案例展示</router-link>
         <div class="search-box">
           <input type="text" placeholder="搜索" />
           <button>搜索</button>
