@@ -97,19 +97,29 @@ export default {
 }
 .tabs {
   display: flex;
+  justify-content: center;
   gap: 20px;
-  padding: 20px;
+  padding: 40px 20px;
+  flex-wrap: wrap;
 }
 .tabs button {
-  padding: 8px 16px;
-  border: none;
-  background-color: #f0f0f0;
+  padding: 10px 24px;
+  font-size: 14px;
+  color: #666;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.tabs button:hover {
+  color: #2a5db0;
+  border-color: #2a5db0;
 }
 .tabs button.active {
   background-color: #2a5db0;
   color: white;
+  border-color: #2a5db0;
 }
 .product-list {
   display: grid;

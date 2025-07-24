@@ -7,16 +7,12 @@
         <p class="subtitle">深耕工业自动化领域 · 为各行业提供专业解决方案</p>
       </div>
     </div>
-    
+
     <div class="container">
       <!-- 行业分类标签 -->
       <div class="industry-tabs">
-        <button 
-          v-for="industry in industries" 
-          :key="industry.key"
-          :class="['tab-btn', { active: activeIndustry === industry.key }]"
-          @click="activeIndustry = industry.key"
-        >
+        <button v-for="industry in industries" :key="industry.key"
+          :class="['tab-btn', { active: activeIndustry === industry.key }]" @click="activeIndustry = industry.key">
           {{ industry.name }}
         </button>
       </div>
@@ -199,13 +195,13 @@ export default {
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .case-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .case-image {
@@ -226,7 +222,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
   display: flex;
   align-items: flex-end;
   padding: 20px;
