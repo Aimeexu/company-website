@@ -1,7 +1,10 @@
 <template>
   <section class="tech-section">
     <div class="container">
-      <h2 class="section-title">产品展示</h2>
+      <div class="section-header">
+        <h2 class="section-title">产品展示</h2>
+        <router-link to="/product-center" class="more-btn">查看更多 ></router-link>
+      </div>
       <div class="tech-list">
         <div class="tech-item" v-for="(tech, index) in techs" :key="index">
           <img class="tech-img" :src="tech.img" :alt="tech.title" />
@@ -41,10 +44,38 @@ export default {
   margin: 0 auto;
   padding: 0 16px;
 }
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
 .section-title {
   font-size: 28px;
   text-align: center;
-  margin-bottom: 32px;
+  flex: 1;
+  margin: 0;
+}
+
+.more-btn {
+  background: linear-gradient(135deg, #2a5db0, #1f4580);
+  color: white;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(42, 93, 176, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.more-btn:hover {
+  background: linear-gradient(135deg, #1f4580, #2a5db0);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(42, 93, 176, 0.4);
 }
 .tech-list {
   display: flex;

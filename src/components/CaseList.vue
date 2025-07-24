@@ -2,22 +2,19 @@
   <section class="case-section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">案例展示</h2>
-        <p class="section-subtitle">CASE STUDIES</p>
-        <p class="section-desc">深耕工业自动化领域，为各行业提供专业解决方案</p>
-      </div>
-
-      <!-- 行业分类标签 -->
-      <div class="industry-tabs">
-        <button v-for="industry in industries" :key="industry.key"
-          :class="['tab-btn', { active: activeIndustry === industry.key }]" @click="activeIndustry = industry.key">
-          {{ industry.name }}
-        </button>
+        <div class="header-content">
+          <div class="title-area">
+            <h2 class="section-title">案例展示</h2>
+            <p class="section-subtitle">CASE STUDIES</p>
+            <p class="section-desc">深耕工业自动化领域，为各行业提供专业解决方案</p>
+          </div>
+          <router-link to="/case-showcase" class="more-btn">查看更多 ></router-link>
+        </div>
       </div>
 
       <!-- 案例列表 -->
       <div class="case-grid">
-        <div class="case-item" v-for="(caseItem, index) in filteredCases" :key="index">
+        <div class="case-item" v-for="(caseItem, index) in displayCases" :key="index">
           <div class="case-image">
             <img :src="caseItem.img" :alt="caseItem.title" />
             <div class="case-overlay">
@@ -34,15 +31,12 @@
             <div class="case-tags">
               <span v-for="tag in caseItem.tags" :key="tag" class="tag">{{ tag }}</span>
             </div>
-            <button class="btn-detail">查看详情 →</button>
+            <button class="btn-detail">查看详情</button>
           </div>
         </div>
       </div>
 
-      <!-- 更多案例按钮 -->
-      <div class="more-cases">
-        <button class="btn-more">查看更多案例</button>
-      </div>
+
     </div>
   </section>
 </template>
@@ -126,11 +120,9 @@ export default {
     }
   },
   computed: {
-    filteredCases() {
-      if (this.activeIndustry === 'all') {
-        return this.cases;
-      }
-      return this.cases.filter(item => item.industryKey === this.activeIndustry);
+    displayCases() {
+      // 首页只显示前3个案例
+      return this.cases.slice(0, 3);
     }
   }
 }
@@ -150,8 +142,20 @@ export default {
 
 /* 标题区域 */
 .section-header {
-  text-align: center;
   margin-bottom: 50px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title-area {
+  text-align: center;
+  flex: 1;
 }
 
 .section-title {
@@ -177,52 +181,139 @@ export default {
   line-height: 1.6;
 }
 
-/* 行业分类标签 */
-.industry-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
+.more-btn {
+  background: linear-gradient(135deg, #2a5db0, #1f4580);
+  color: white;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(42, 93, 176, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.tab-btn {
-  padding: 10px 24px;
+.more-btn:hover {
+  background: linear-gradient(135deg, #1f4580, #2a5db0);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(42, 93, 176, 0.4);
+}
+
+/* 案例网格 */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.case-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.case-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.case-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.case-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.industry-tag {
+  background-color: #2a5db0;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.case-content {
+  padding: 24px;
+}
+
+.case-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+}
+
+.case-meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #888;
+}
+
+.case-desc {
   font-size: 14px;
   color: #666;
+  line-height: 1.6;
   margin-bottom: 16px;
-  line-height: 1.5;
-  text-align: left;
   display: -webkit-box;
-  /* 启用弹性盒模型 */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  /* 垂直排列子元素 */
-  line-clamp: 2;
-  -webkit-line-clamp: 4;
-  /* 限制最多显示 2 行 */
   overflow: hidden;
-  /* 隐藏超出内容 */
-  text-overflow: ellipsis;
-  /* 超出部分用省略号表示 */
 }
 
-.btn {
-  padding: 8px 20px;
-  border: none;
-  color: #00aaff;
-  cursor: pointer;
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  background-color: #f0f0f0;
+  color: #666;
+  padding: 4px 8px;
   border-radius: 4px;
-  transition: background-color 0.3s ease;
-  display: block;
-  /* 让按钮独占一行 */
-  margin-left: 0;
-  /* 确保没有左边距 */
-  margin-right: auto;
-  /* 可选：防止右边距撑开 */
+  font-size: 12px;
 }
 
-.btn:hover {
-  background-color: #7a7d7f;
+.btn-detail {
+  background-color: #2a5db0;
   color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
+
+.btn-detail:hover {
+  background-color: #1f4580;
+}
+
+
 </style>
