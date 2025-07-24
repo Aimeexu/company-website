@@ -6,6 +6,7 @@
         <router-link to="/" class="nav-link" active-class="active" exact>首页</router-link>
         <router-link to="/product-center" class="nav-link" active-class="active">工业类产品</router-link>
         <router-link to="/case-showcase" class="nav-link" active-class="active">案例展示</router-link>
+        <router-link to="/contact" class="nav-link" active-class="active">联系我们</router-link>
         <div class="search-box">
           <input type="text" placeholder="搜索" />
           <button>搜索</button>
