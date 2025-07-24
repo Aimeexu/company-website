@@ -5,7 +5,7 @@
       <nav class="nav">
         <router-link to="/" class="nav-link" active-class="active" exact>首页</router-link>
         <router-link to="/product-center" class="nav-link" active-class="active">工业类产品</router-link>
-        <router-link to="#" class="nav-link">案例展示</router-link>
+        <router-link to="/case-showcase" class="nav-link" active-class="active">案例展示</router-link>
         <div class="search-box">
           <input type="text" placeholder="搜索" />
           <button>搜索</button>
@@ -25,7 +25,7 @@ export default {
 .app-header {
   background-color: #0d1731;
   color: white;
-  padding: 16px 0;
+  padding: 24px 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .container {

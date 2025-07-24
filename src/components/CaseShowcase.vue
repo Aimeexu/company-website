@@ -1,16 +1,22 @@
 <template>
-  <section class="case-section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">案例展示</h2>
-        <p class="section-subtitle">CASE STUDIES</p>
-        <p class="section-desc">深耕工业自动化领域，为各行业提供专业解决方案</p>
+  <section class="case-showcase">
+    <div class="banner">
+      <div class="banner-content">
+        <h2>案例展示</h2>
+        <p>CASE STUDIES</p>
+        <p class="subtitle">深耕工业自动化领域 · 为各行业提供专业解决方案</p>
       </div>
-
+    </div>
+    
+    <div class="container">
       <!-- 行业分类标签 -->
       <div class="industry-tabs">
-        <button v-for="industry in industries" :key="industry.key"
-          :class="['tab-btn', { active: activeIndustry === industry.key }]" @click="activeIndustry = industry.key">
+        <button 
+          v-for="industry in industries" 
+          :key="industry.key"
+          :class="['tab-btn', { active: activeIndustry === industry.key }]"
+          @click="activeIndustry = industry.key"
+        >
           {{ industry.name }}
         </button>
       </div>
@@ -34,14 +40,9 @@
             <div class="case-tags">
               <span v-for="tag in caseItem.tags" :key="tag" class="tag">{{ tag }}</span>
             </div>
-            <button class="btn-detail">查看详情 →</button>
+            <button class="btn-detail">查看详情</button>
           </div>
         </div>
-      </div>
-
-      <!-- 更多案例按钮 -->
-      <div class="more-cases">
-        <button class="btn-more">查看更多案例</button>
       </div>
     </div>
   </section>
@@ -49,7 +50,7 @@
 
 <script>
 export default {
-  name: 'CaseList',
+  name: 'CaseShowcase',
   data() {
     return {
       activeIndustry: 'all',
@@ -69,7 +70,7 @@ export default {
           industryKey: 'automotive',
           location: '上海',
           date: '2024年3月',
-          description: '通过部署智能传感器和PLC控制系统，实现了焊装、涂装生产线的全自动化控制，生产效率提升40%，产品质量稳定性显著提高。',
+          description: '通过部署智能传感器和PLC控制系统，实现了焊装、涂装生产线的全自动化控制，生产效率提升40%。',
           tags: ['PLC控制', '传感器', '自动化', '质量提升']
         },
         {
@@ -79,7 +80,7 @@ export default {
           industryKey: 'machinery',
           location: '北京',
           date: '2024年1月',
-          description: '为大型挖掘机和装载机配备智能监控系统，实时监测设备运行状态，预防性维护降低故障率60%，延长设备使用寿命。',
+          description: '为大型挖掘机和装载机配备智能监控系统，实时监测设备运行状态，预防性维护降低故障率60%。',
           tags: ['智能监控', '预防维护', '设备管理', '效率优化']
         },
         {
@@ -111,16 +112,6 @@ export default {
           date: '2023年11月',
           description: '部署RFID技术和自动化分拣系统，实现货物的智能识别、自动分拣和库存管理，仓储效率提升50%。',
           tags: ['RFID技术', '自动分拣', '库存管理', '智能仓储']
-        },
-        {
-          img: 'https://p.ipic.vip/lpzlsq.png',
-          title: '钢铁冶金行业安全监控',
-          industry: '钢铁冶金',
-          industryKey: 'machinery',
-          location: '唐山',
-          date: '2024年4月',
-          description: '在高温、高危环境下部署耐高温传感器和安全防护系统，实现24小时无人值守监控，安全事故率降低90%。',
-          tags: ['安全监控', '耐高温传感器', '无人值守', '风险防控']
         }
       ]
     }
@@ -137,47 +128,37 @@ export default {
 </script>
 
 <style scoped>
-.case-section {
-  padding: 60px 0;
-  background-color: #f8f9fa;
+.case-showcase {
+  font-family: Arial, sans-serif;
+}
+
+.banner {
+  background: url('https://p.ipic.vip/b1zsbo.jpg') no-repeat center center / cover;
+  color: white;
+  padding: 60px 20px;
+  text-align: left;
+}
+
+.banner-content h2 {
+  font-size: 36px;
+  margin: 0 0 10px;
+}
+
+.banner-content p {
+  margin: 4px 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 40px 20px;
 }
 
-/* 标题区域 */
-.section-header {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.section-title {
-  font-size: 36px;
-  font-weight: bold;
-  color: #1a1a1a;
-  margin-bottom: 8px;
-}
-
-.section-subtitle {
-  font-size: 16px;
-  color: #2a5db0;
-  font-weight: 500;
-  margin-bottom: 16px;
-  letter-spacing: 2px;
-}
-
-.section-desc {
-  font-size: 16px;
-  color: #666;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-/* 行业分类标签 */
 .industry-tabs {
   display: flex;
   justify-content: center;
@@ -190,39 +171,128 @@ export default {
   padding: 10px 24px;
   font-size: 14px;
   color: #666;
-  margin-bottom: 16px;
-  line-height: 1.5;
-  text-align: left;
-  display: -webkit-box;
-  /* 启用弹性盒模型 */
-  -webkit-box-orient: vertical;
-  /* 垂直排列子元素 */
-  line-clamp: 2;
-  -webkit-line-clamp: 4;
-  /* 限制最多显示 2 行 */
-  overflow: hidden;
-  /* 隐藏超出内容 */
-  text-overflow: ellipsis;
-  /* 超出部分用省略号表示 */
-}
-
-.btn {
-  padding: 8px 20px;
-  border: none;
-  color: #00aaff;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-  display: block;
-  /* 让按钮独占一行 */
-  margin-left: 0;
-  /* 确保没有左边距 */
-  margin-right: auto;
-  /* 可选：防止右边距撑开 */
+  transition: all 0.3s ease;
 }
 
-.btn:hover {
-  background-color: #7a7d7f;
+.tab-btn:hover {
+  color: #2a5db0;
+  border-color: #2a5db0;
+}
+
+.tab-btn.active {
+  background-color: #2a5db0;
   color: white;
+  border-color: #2a5db0;
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.case-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.case-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.case-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.case-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.industry-tag {
+  background-color: #2a5db0;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.case-content {
+  padding: 24px;
+}
+
+.case-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+}
+
+.case-meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #888;
+}
+
+.case-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  background-color: #f0f0f0;
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.btn-detail {
+  background-color: #2a5db0;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-detail:hover {
+  background-color: #1f4580;
 }
 </style>
