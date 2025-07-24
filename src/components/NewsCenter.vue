@@ -21,56 +21,90 @@
         </button>
       </div>
 
-      <!-- 新闻列表 -->
-      <div class="news-content">
-        <!-- 热门新闻 -->
-        <div class="featured-news" v-if="activeCategory === 'all'">
-          <h3>热门资讯</h3>
-          <div class="featured-item" v-for="news in featuredNews" :key="news.id">
-            <div class="featured-image">
-              <img :src="news.img" :alt="news.title" />
-            </div>
-            <div class="featured-content">
-              <div class="news-meta">
-                <span class="category">{{ news.category }}</span>
-                <span class="date">{{ news.date }}</span>
-              </div>
-              <h4 class="news-title">{{ news.title }}</h4>
-              <p class="news-summary">{{ news.summary }}</p>
-              <button class="read-more">阅读全文 →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 新闻列表 -->
-        <div class="news-list">
-          <h3 v-if="activeCategory !== 'all'">{{ getCategoryName(activeCategory) }}</h3>
-          <div class="news-grid">
+      <!-- 主要内容区域 -->
+      <div class="main-content">
+        <!-- 左侧新闻列表 -->
+        <div class="news-list-section">
+          <div class="news-list">
             <div class="news-item" v-for="news in filteredNews" :key="news.id">
               <div class="news-image">
                 <img :src="news.img" :alt="news.title" />
-                <div class="news-overlay">
-                  <span class="category-tag">{{ news.category }}</span>
-                </div>
               </div>
               <div class="news-content">
-                <div class="news-meta">
-                  <span class="date">{{ news.date }}</span>
-                  <span class="views">{{ news.views }} 阅读</span>
+                <div class="news-header">
+                  <span class="category-badge">{{ news.category }}</span>
+                  <span class="news-date">{{ news.date }}</span>
                 </div>
-                <h4 class="news-title">{{ news.title }}</h4>
+                <h3 class="news-title">{{ news.title }}</h3>
                 <p class="news-summary">{{ news.summary }}</p>
-                <button class="read-more">查看详情</button>
+                <div class="news-footer">
+                  <span class="views">{{ news.views }} 阅读</span>
+                  <button class="read-btn">阅读全文</button>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- 分页 -->
+          <div class="pagination">
+            <button class="page-btn prev" :disabled="currentPage === 1" @click="currentPage--">
+              ← 上一页
+            </button>
+            <div class="page-numbers">
+              <span v-for="page in visiblePages" :key="page" 
+                    :class="['page-num', { active: page === currentPage }]"
+                    @click="currentPage = page">
+                {{ page }}
+              </span>
+            </div>
+            <button class="page-btn next" :disabled="currentPage === totalPages" @click="currentPage++">
+              下一页 →
+            </button>
+          </div>
         </div>
 
-        <!-- 分页 -->
-        <div class="pagination">
-          <button class="page-btn" :disabled="currentPage === 1" @click="currentPage--">上一页</button>
-          <span class="page-info">第 {{ currentPage }} 页 / 共 {{ totalPages }} 页</span>
-          <button class="page-btn" :disabled="currentPage === totalPages" @click="currentPage++">下一页</button>
+        <!-- 右侧边栏 -->
+        <div class="sidebar">
+          <!-- 热门文章 -->
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">热门文章</h4>
+            <div class="hot-news-list">
+              <div class="hot-news-item" v-for="(news, index) in hotNews" :key="news.id">
+                <span class="hot-rank">{{ index + 1 }}</span>
+                <div class="hot-content">
+                  <h5 class="hot-title">{{ news.title }}</h5>
+                  <div class="hot-meta">
+                    <span class="hot-date">{{ news.date }}</span>
+                    <span class="hot-views">{{ news.views }} 阅读</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 最新公告 -->
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">最新公告</h4>
+            <div class="announcement-list">
+              <div class="announcement-item" v-for="announcement in announcements" :key="announcement.id">
+                <div class="announcement-content">
+                  <h5 class="announcement-title">{{ announcement.title }}</h5>
+                  <span class="announcement-date">{{ announcement.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 标签云 -->
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">热门标签</h4>
+            <div class="tag-cloud">
+              <span v-for="tag in tags" :key="tag.name" 
+                    :class="['tag-item', `tag-${tag.level}`]">
+                {{ tag.name }}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -92,23 +126,34 @@ export default {
         { key: 'technology', name: '技术前沿' },
         { key: 'exhibition', name: '展会活动' }
       ],
-      featuredNews: [
+      announcements: [
         {
           id: 1,
-          img: 'https://p.ipic.vip/kgstao.png',
-          title: '工业风帆荣获"2024年度工业自动化创新企业"奖项',
-          category: '公司新闻',
-          date: '2024-07-20',
-          summary: '在刚刚结束的中国工业自动化大会上，工业风帆凭借在智能制造领域的突出贡献，荣获"2024年度工业自动化创新企业"殊荣。'
+          title: '关于2024年春节放假安排的通知',
+          date: '2024-01-15'
         },
         {
           id: 2,
-          img: 'https://p.ipic.vip/lpzlsq.png',
-          title: '5G+工业互联网：制造业数字化转型新引擎',
-          category: '技术前沿',
-          date: '2024-07-18',
-          summary: '随着5G技术的成熟应用，工业互联网迎来了前所未有的发展机遇。本文深入分析5G技术如何推动制造业实现数字化转型。'
+          title: '工业风帆官网升级维护公告',
+          date: '2024-01-10'
+        },
+        {
+          id: 3,
+          title: '新产品发布会邀请函',
+          date: '2024-01-05'
         }
+      ],
+      tags: [
+        { name: '工业自动化', level: 'high' },
+        { name: '智能制造', level: 'high' },
+        { name: 'PLC控制', level: 'medium' },
+        { name: '传感器', level: 'medium' },
+        { name: '机器人', level: 'high' },
+        { name: '数字化转型', level: 'low' },
+        { name: '5G技术', level: 'medium' },
+        { name: '人工智能', level: 'high' },
+        { name: '物联网', level: 'low' },
+        { name: '边缘计算', level: 'low' }
       ],
       newsList: [
         {
@@ -180,17 +225,21 @@ export default {
         return this.newsList;
       }
       return this.newsList.filter(news => news.categoryKey === this.activeCategory);
-    }
-  },
-  methods: {
-    getCategoryName(key) {
-      const category = this.categories.find(cat => cat.key === key);
-      return category ? category.name : '';
+    },
+    hotNews() {
+      return this.newsList.slice(0, 5);
+    },
+    visiblePages() {
+      const pages = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+      return pages;
     }
   }
 }
-</script><style 
-scoped>
+</script><style sc
+oped>
 .news-center {
   font-family: Arial, sans-serif;
 }
@@ -252,128 +301,45 @@ scoped>
   border-color: #2a5db0;
 }
 
-.news-content h3 {
-  font-size: 24px;
-  color: #1a1a1a;
-  margin-bottom: 30px;
-  border-bottom: 2px solid #2a5db0;
-  padding-bottom: 10px;
+/* 主要内容区域 */
+.main-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
 }
 
-/* 热门新闻样式 */
-.featured-news {
-  margin-bottom: 50px;
-}
-
-.featured-item {
-  display: flex;
+/* 左侧新闻列表 */
+.news-list-section {
   background: white;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin-bottom: 30px;
-  transition: transform 0.3s ease;
-}
-
-.featured-item:hover {
-  transform: translateY(-3px);
-}
-
-.featured-image {
-  width: 300px;
-  height: 200px;
-  flex-shrink: 0;
-}
-
-.featured-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.featured-content {
   padding: 30px;
-  flex: 1;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.news-meta {
+.news-list {
   display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
-
-.category {
-  background-color: #2a5db0;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.date {
-  color: #888;
-}
-
-.views {
-  color: #888;
-}
-
-.news-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0 0 15px;
-  color: #1a1a1a;
-  line-height: 1.4;
-}
-
-.news-summary {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.read-more {
-  background-color: #2a5db0;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.read-more:hover {
-  background-color: #1f4580;
-}
-
-/* 新闻网格样式 */
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  flex-direction: column;
   gap: 30px;
-  margin-bottom: 40px;
 }
 
 .news-item {
-  background: white;
+  display: flex;
+  background: #f8f9fa;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e9ecef;
 }
 
 .news-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
 .news-image {
-  position: relative;
-  height: 200px;
-  overflow: hidden;
+  width: 200px;
+  height: 150px;
+  flex-shrink: 0;
 }
 
 .news-image img {
@@ -382,36 +348,79 @@ scoped>
   object-fit: cover;
 }
 
-.news-overlay {
-  position: absolute;
-  top: 15px;
-  left: 15px;
+.news-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.category-tag {
-  background-color: #2a5db0;
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.category-badge {
+  background: linear-gradient(135deg, #2a5db0, #1f4580);
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
+  font-weight: 500;
 }
 
-.news-content {
-  padding: 24px;
+.news-date {
+  color: #888;
+  font-size: 14px;
 }
 
-.news-item .news-title {
-  font-size: 16px;
-  margin-bottom: 12px;
+.news-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin: 0 0 12px;
+  line-height: 1.4;
 }
 
-.news-item .news-summary {
+.news-summary {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
   margin-bottom: 15px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.news-item .read-more {
-  padding: 6px 16px;
+.news-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.views {
+  color: #888;
   font-size: 13px;
+}
+
+.read-btn {
+  background: linear-gradient(135deg, #2a5db0, #1f4580);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.read-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(42, 93, 176, 0.3);
 }
 
 /* 分页样式 */
@@ -419,47 +428,229 @@ scoped>
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  margin-top: 40px;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #e9ecef;
 }
 
 .page-btn {
   background-color: #2a5db0;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .page-btn:hover:not(:disabled) {
   background-color: #1f4580;
+  transform: translateY(-1px);
 }
 
 .page-btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+  transform: none;
 }
 
-.page-info {
-  color: #666;
+.page-numbers {
+  display: flex;
+  gap: 8px;
+}
+
+.page-num {
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
   font-size: 14px;
+  transition: all 0.3s ease;
+  color: #666;
+  background: #f8f9fa;
+}
+
+.page-num:hover {
+  background-color: #e9ecef;
+  color: #2a5db0;
+}
+
+.page-num.active {
+  background-color: #2a5db0;
+  color: white;
+}
+
+/* 右侧边栏 */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.sidebar-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #2a5db0;
+}
+
+/* 热门文章 */
+.hot-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.hot-news-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.hot-news-item:hover {
+  background-color: #f8f9fa;
+}
+
+.hot-rank {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #2a5db0, #1f4580);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.hot-content {
+  flex: 1;
+}
+
+.hot-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hot-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #888;
+}
+
+/* 最新公告 */
+.announcement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.announcement-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #2a5db0;
+  transition: all 0.3s ease;
+}
+
+.announcement-item:hover {
+  background: #e9ecef;
+  transform: translateX(2px);
+}
+
+.announcement-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.announcement-date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* 标签云 */
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-item {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.tag-high {
+  background: linear-gradient(135deg, #2a5db0, #1f4580);
+  color: white;
+  border-color: #2a5db0;
+}
+
+.tag-medium {
+  background: #e3f2fd;
+  color: #2a5db0;
+  border-color: #2a5db0;
+}
+
+.tag-low {
+  background: #f8f9fa;
+  color: #666;
+}
+
+.tag-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* 响应式设计 */
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .sidebar {
+    order: -1;
+  }
+}
+
 @media (max-width: 768px) {
-  .featured-item {
+  .news-item {
     flex-direction: column;
   }
   
-  .featured-image {
+  .news-image {
     width: 100%;
     height: 200px;
-  }
-  
-  .news-grid {
-    grid-template-columns: 1fr;
   }
   
   .banner-content h2 {
@@ -467,8 +658,12 @@ scoped>
   }
   
   .pagination {
-    flex-direction: column;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .page-numbers {
+    order: -1;
   }
 }
 </style>
